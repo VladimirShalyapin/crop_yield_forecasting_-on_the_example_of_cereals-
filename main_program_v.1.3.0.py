@@ -1,5 +1,6 @@
-# v. 4.0
-# Python 3.9.7
+# v. 1.3.0
+# Python 3.10.4
+# Shalyapin Vladimir
 
 import math
 
@@ -58,51 +59,50 @@ def divisor(a, b):
         cons_divisor = float(2.0)
     return cons_divisor
 
+# По методике необходимо сложить базовую урожайность, квадрат отклонения и прибавку урожайности по формуле: result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+# According to the methodology, it is necessary to add the basic yield, the square of the deviation and the increase in yield according to the formula: result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+
 # Wheat calculation logic (Russia, Krasnodar Territory), it is necessary to compare yield time series for a specific region
 # Логика расчета пшеницы (Россия, Краснодарский край), необходимо сравнить временные ряды урожайности для конкретного региона
 
-def wheat(a, b, c, d, e, f, g, h):
-    if float(a) > float(b):
-            if float(b) < float(c):
-                if float(c) > float(d):
-                    if float(d) < float(e):
-                        result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                    else:
-                        condition = float(h) - float(g)
-                        if float(condition) < float(5.0):
-                            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                        else:
-                            result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
-                else:    
-                    result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
-            elif float(b) > float(c):
-                if float(c) > float(d):
-                    result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)                        
-                else:
-                    condition_2 = float(d) - float(c)
-                    if float(condition_2) >= float(10.0) and float(condition_2) <= float(10.4):
-                        result = float(d_mean_actual_yield) - float(yield_increase_sum)
-                    else:
-                        condition_3 = float(e) - float(f)
-                        if float(condition_3) >= float(2.5) and float(condition_3) <= float(8.0):
-                            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                        elif float(condition_3) >= float(0.0) and float(condition_3) <= float(2.4):
-                            result = float(d_mean_actual_yield) - float(root_meaning)
-                        else:
-                            result = float(d_mean_actual_yield) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) - float(yield_increase_sum)
-    elif float(c) > float(b) > float(a):
-        if float(a) < float(g):
-            condition_4 = float(g) - float(h)
-            if float(condition_4) >= float(0.0) and float(condition_4) <= float(5.0):
-                result = float(d_mean_actual_yield) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) + float(yield_increase_sum)
+def wheat(a, b, c, d):
+    difference_a = float(a) + float(10.0)
+    difference_b = float(b) + float(10.0)
+    difference_d = float(d) + float(10.0)
+    if float(a) > float(b) > float(c) > float(d):
+        if difference_d > float(10.0):
+            result = float(d_mean_actual_yield) - float(root_meaning)
         else:
-            result = float(d_mean_actual_yield) - float(yield_increase_sum) + float(root_meaning)
-    elif float(a) < float(b) > float(c):
-        result = float(d_mean_actual_yield) + float(yield_increase_sum)
+            result = float(d_mean_actual_yield) + float(root_meaning)
+    elif float(a) > float(b) > float(d) > float(c):
+        result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
+    elif float(d) > float(c) > float(a) > float(b):
+        if difference_b < float(10.0):
+            result = float(d_mean_actual_yield) + float(root_meaning)
+        else:
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+    elif float(c) > float(b) > float(a) > float(d):
+        if difference_d < float(10.0):
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
+        else:
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+    elif float(a) > float(d) > float(c) > float(b):
+        if difference_b < float(10.0):
+            numb = float(number_9) - float(number_8)
+            numb_d = float(10.0) - float(numb)
+            if numb_d <= float(5.0):
+                result = float(d_mean_actual_yield) - float(yield_increase_sum)
+            else:
+                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+        else:
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+    elif float(b) > float(c) > float(d) > float(a):
+        numb = float(number_9) - float(number_8)
+        numb_d = float(10.0) - float(numb)
+        if numb_d <= float(11.0):
+            result = float(d_mean_actual_yield) + float(yield_increase_sum)
+        else:
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
     else:
         result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
     return result
@@ -110,62 +110,13 @@ def wheat(a, b, c, d, e, f, g, h):
 # Barley calculation logic (Russia, Krasnodar Territory), it is necessary to compare yield time series for a specific region
 # Логика расчета ячменя (Россия, Краснодарский край), необходимо сравнить временные ряды урожайности для конкретного региона
 
-def barley(a, b, c, d, e, f, g, h):
-    if float(a) > float(b):
-            if float(b) < float(c):
-                if float(c) > float(d):
-                    if float(d) < float(e):
-                        result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                    else:
-                        condition = float(h) - float(g)
-                        if float(condition) < float(5.0):
-                            n_condition = float(a) - float(g)
-                            if float(n_condition) < float(10.0):
-                                result = float(d_mean_actual_yield) + float(root_meaning)
-                            else:                    
-                                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                        else:
-                            result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
-                else:    
-                    result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
-            elif float(b) > float(c):
-                if float(c) > float(d):
-                    condition_2 = float(g) - float(h)
-                    if float(condition_2) <= float(0.0):
-                        result = float(d_mean_actual_yield) + float(root_meaning)
-                    else:
-                        result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)                        
-                else:
-                    condition_3 = float(d) - float(c)
-                    if float(condition_3) >= float(10.0) and float(condition_3) <= float(10.4):
-                        result = float(d_mean_actual_yield) - float(yield_increase_sum)
-                    else:
-                        condition_4 = float(e) - float(f)
-                        if float(condition_4) >= float(2.5) and float(condition_4) <= float(8.0):
-                            condition_4_2 = float(g) - float(h)
-                            if float(condition_4_2) <= float(2.4):
-                                result = float(d_mean_actual_yield) - float(yield_increase_sum)
-                            else:
-                                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-                        elif float(condition_4) >= float(0.0) and float(condition_4) <= float(2.4):
-                            result = float(d_mean_actual_yield) - float(root_meaning)
-                        else:                   
-                            result = float(d_mean_actual_yield) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) - float(yield_increase_sum)
-    elif float(c) > float(b) > float(a):
-        if float(a) < float(g):
-            condition_5 = float(g) - float(h)
-            if float(condition_5) >= float(0.0) and float(condition_5) <= float(5.0):
-                result = float(d_mean_actual_yield) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) + float(yield_increase_sum)
-        else:
-            result = float(d_mean_actual_yield) - float(yield_increase_sum) + float(root_meaning)
-    elif float(a) < float(b) > float(c):
-        condition_6 = float(g) - float(h)
-        if float(condition_6) >= float(10.0):
-            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+def barley(a, b, c, d):
+    difference_d = float(d) + float(10.0)
+    if float(a) > float(c) > float(b) > float(d) or float(b) > float(d) > float(a) > float(c) or float(d) > float(a) > float(b) > float(c) or float(d) > float(a) == float(b) > float(c):
+        result = float(d_mean_actual_yield) + float(root_meaning)
+    elif float(b) > float(a) > float(c) > float(d) or float(b) > float(a) > float(c) == float(d):
+        if difference_d > float(10.0):
+            result = float(d_mean_actual_yield) - float(yield_increase_sum)
         else:
             result = float(d_mean_actual_yield) + float(yield_increase_sum)
     else:
@@ -175,38 +126,28 @@ def barley(a, b, c, d, e, f, g, h):
 # Maize calculation logic (Russia, Krasnodar Territory), it is necessary to compare yield time series for a specific region
 # Логика расчета кукурузы (Россия, Краснодарский край), необходимо сравнить временные ряды урожайности для конкретного региона
 
-def maize(a, b, c, d, e, f, g, h):
-    if float(a) > float(b):
-        if float(b) < float(c):
-            if float(c) > float(d):
-                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-            else:
-                if float(e) > float(f):
-                    result = float(d_mean_actual_yield) + float(root_meaning)
-                else:
-                    result = float(d_mean_actual_yield)
-        elif float(b) > float(c):
-            if float(c) < float(d):
-                result = float(d_mean_actual_yield) + float(yield_increase_sum)   
-            else:
-                result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
+def maize(a, b, c, d):
+    if float(a) > float(c) > float(d) > float(b):
+        if float(number_8) > float(number_9):
+            result = float(d_mean_actual_yield) + float(root_meaning)
+        else:
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+    elif float(b) > float(a) > float(c) > float(d):
+        if float(number_6) > float(number_7):
+            result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
+        else:
+            result = float(d_mean_actual_yield) + float(root_meaning)
+    elif float(a) > float(c) > float(b) > float(d):
+        result = float(d_mean_actual_yield) - float(yield_increase_sum)
+    elif float(a) > float(b) > float(d) > float(c):
+        if float(number_6) > float(number_5) > float(number_7):
+            result = float(d_mean_actual_yield)
         else:
             result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
-    elif float(a) < float(b):
-        if float(b) > float(c):
-            if float(c) > float(d):
-                result = float(d_mean_actual_yield) - float(yield_increase_sum)
-            elif float(c) == float(d):
-                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) + float(root_meaning)
-        elif float(b) < float(c):
-            if float(c) < float(d): 
-                result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
-            else:
-                result = float(d_mean_actual_yield) + float(yield_increase_sum)
+    elif float(b) > float(c) > float(d) > float(a) or float(d) > float(a) > float(c) > float(b):
+        result = float(d_mean_actual_yield) + float(yield_increase_sum) - float(root_meaning)
     else:
-        result = float(d_mean_actual_yield) + float(yield_increase_sum)*2 + float(root_meaning)*2
+        result = float(d_mean_actual_yield) + float(yield_increase_sum) + float(root_meaning)
     return result
 
 # РУС
@@ -261,22 +202,14 @@ while True:
         year_9 = int(year_0) - int(1)
         print('Для расчета потребуются данные об урожайности за следующие года; ' + str(year_1) + ', ' + str(year_2) + ', ' + str(year_3) + ', ' + str(year_4) + ', ' + str(year_5) + ', ' + str(year_6) + ', ' + str(year_7) + ', ' + str(year_8) + ', ' + str(year_9))
 
-        # h
         number_1 = input('Урожайность ' + str(year_1) + ' ц/га: ')
-        # g
         number_2 = input('Урожайность ' + str(year_2) + ' ц/га: ')
         number_3 = input('Урожайность ' + str(year_3) + ' ц/га: ')
-        # f
         number_4 = input('Урожайность ' + str(year_4) + ' ц/га: ')
-        # e
         number_5 = input('Урожайность ' + str(year_5) + ' ц/га: ')
-        # d
         number_6 = input('Урожайность ' + str(year_6) + ' ц/га: ')
-        # c
         number_7 = input('Урожайность ' + str(year_7) + ' ц/га: ')
-        # b
         number_8 = input('Урожайность ' + str(year_8) + ' ц/га: ')
-        # a
         number_9 = input('Урожайность ' + str(year_9) + ' ц/га: ')
 
         deviation_sum_n2345 = deviation_sum(float(number_2), float(number_3), float(number_4), float(number_5))
@@ -285,9 +218,13 @@ while True:
         deviation_sum_n5678 = deviation_sum(float(number_5), float(number_6), float(number_7), float(number_8))
         deviation_sum_n6789 = deviation_sum(float(number_6), float(number_7), float(number_8), float(number_9))
 
+        # a
         deviation_n3456_n2345 = yield_change(float(deviation_sum_n3456), float(deviation_sum_n2345))
+        # b
         deviation_n4567_n3456 = yield_change(float(deviation_sum_n4567), float(deviation_sum_n3456))
+        # c
         deviation_n5678_n4567 = yield_change(float(deviation_sum_n5678), float(deviation_sum_n4567))
+        # d
         deviation_n6789_n5678 = yield_change(float(deviation_sum_n6789), float(deviation_sum_n5678))
 
         print('Изменение урожайности по сравнению с предыдущим периодом № 1: ' + str(deviation_n3456_n2345) + ' ц с га')
@@ -333,17 +270,23 @@ while True:
         root_meaning = float(r_sq_f_s_123_calculate_the_random_component) / float(ts_divisor)
 
         if str(culture) == str(1):
-            t_result = wheat(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = wheat(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # надежность для пшеницы
+            persent = str('6.1 %')
         elif str(culture) == str(2):
-            t_result = barley(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = barley(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # надежность для ячменя
+            persent = str('2.5 %')
         elif str(culture) == str(3):
-            t_result = maize(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = maize(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # надежность для кукурузы
+            persent = str('5.9 %')
         else:
             culture = input('Напишите 1 если сельскохозяйственная культура пшеница, 2 если ячмень, 3 если кукуруза: ')
 
         r_result = round(t_result, 1)
-        print(str('Прогнозируемая урожайность: ') + str(r_result))
-        writing_r_result = str('Прогнозируемая урожайность: ') + str(r_result)
+        print(str('Прогнозируемая урожайность: ') + str(r_result) + str('+/-') + str(persent))
+        writing_r_result = str('Прогнозируемая урожайность: ') + str(r_result) + str('+/-') + str(persent)
 
         print('Сохранить в txt файл?')
         button_write = input('Введите + чтобы сохранить расчеты и любую другую кнопку чтобы продолжить: ')
@@ -401,22 +344,14 @@ while True:
         year_9 = int(year_0) - int(1)
         print('The calculation will require yield data for the following years; ' + str(year_1) + ', ' + str(year_2) + ', ' + str(year_3) + ', ' + str(year_4) + ', ' + str(year_5) + ', ' + str(year_6) + ', ' + str(year_7) + ', ' + str(year_8) + ', ' + str(year_9))
 
-        # h
         number_1 = input('Yield ' + str(year_1) + ' c/ha: ')
-        # g
         number_2 = input('Yield ' + str(year_2) + ' c/ha: ')
         number_3 = input('Yield ' + str(year_3) + ' c/ha: ')
-        # f
         number_4 = input('Yield ' + str(year_4) + ' c/ha: ')
-        # e
         number_5 = input('Yield ' + str(year_5) + ' c/ha: ')
-        # d
         number_6 = input('Yield ' + str(year_6) + ' c/ha: ')
-        # c
         number_7 = input('Yield ' + str(year_7) + ' c/ha: ')
-        # b
         number_8 = input('Yield ' + str(year_8) + ' c/ha: ')
-        # a
         number_9 = input('Yield ' + str(year_9) + ' c/ha: ')
 
         deviation_sum_n2345 = deviation_sum(float(number_2), float(number_3), float(number_4), float(number_5))
@@ -425,9 +360,13 @@ while True:
         deviation_sum_n5678 = deviation_sum(float(number_5), float(number_6), float(number_7), float(number_8))
         deviation_sum_n6789 = deviation_sum(float(number_6), float(number_7), float(number_8), float(number_9))
 
+        # a
         deviation_n3456_n2345 = yield_change(float(deviation_sum_n3456), float(deviation_sum_n2345))
+        # b
         deviation_n4567_n3456 = yield_change(float(deviation_sum_n4567), float(deviation_sum_n3456))
+        # c
         deviation_n5678_n4567 = yield_change(float(deviation_sum_n5678), float(deviation_sum_n4567))
+        # d
         deviation_n6789_n5678 = yield_change(float(deviation_sum_n6789), float(deviation_sum_n5678))
 
         print('Change in yield compared to the previous period № 1: ' + str(deviation_n3456_n2345) + ' c/ha')
@@ -472,20 +411,28 @@ while True:
 
         root_meaning = float(r_sq_f_s_123_calculate_the_random_component) / float(ts_divisor)
 
+
+
         if str(culture) == str(1):
-            t_result = wheat(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = wheat(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # reliability for wheat
+            persent = str('6.1 %')
         elif str(culture) == str(2):
-            t_result = barley(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = barley(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # reliability for barley
+            persent = str('2.5 %')
         elif str(culture) == str(3):
-            t_result = maize(number_9, number_8, number_7, number_6, number_5, number_4, number_2, number_1)
+            t_result = maize(deviation_n3456_n2345, deviation_n4567_n3456, deviation_n5678_n4567, deviation_n6789_n5678)
+            # reliability for corn
+            persent = str('5.9 %')
         else:
             culture = input('Write 1 if the crop is wheat, 2 if barley, 3 if corn: ')
 
         r_result = round(t_result, 1)
-        print(str('Projected yield: ') + str(r_result))
+        print(str('Projected yield: ') + str(r_result) + str('+/-') + str(persent))
 
         # To save to txt file
-        writing_r_result = str('Projected yield: ') + str(r_result)
+        writing_r_result = str('Projected yield: ') + str(r_result) + str('+/-') + str(persent)
 
         print('Save to txt file?')
         button_write = input('Enter + to save calculations and any other button to continue: ')
